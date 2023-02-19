@@ -21,31 +21,30 @@ songs.get("/", async (req, res) => {
   const allSongs = await getAllSongs();
   // console.log(allSongs);
 
-  // const { order, is_favorite } = req.query;
+  const { order, is_favorite } = req.query;
 
-  // let songsCopy = [...allSongs];
+  let songsCopy = [...allSongs];
 
-  // if (songsCopy[0]) {
-  //   if (order) {
-  //     if (order === "asc") {
-  //       songsCopy.sort((a, b) => (a.name > b.name ? 1 : -1));
-  //     } else if (order === "desc") {
-  //       songsCopy.sort((a, b) => (a.name > b.name ? -1 : 1));
-  //     }
-  //   }
+  if (songsCopy[0]) {
+    if (order) {
+      if (order === "asc") {
+        songsCopy.sort((a, b) => (a.name > b.name ? 1 : -1));
+      } else if (order === "desc") {
+        songsCopy.sort((a, b) => (a.name > b.name ? -1 : 1));
+      }
+    }
 
-  //   if (is_favorite) {
-  //     if (is_favorite === "true") {
-  //       songsCopy = songsCopy.filter(({ is_favorite }) => is_favorite === true);
-  //     } else if (is_favorite === "false") {
-  //       songsCopy = songsCopy.filter(
-  //         ({ is_favorite }) => is_favorite === false
-  //       );
-  //     }
-  //   }
-
-  if (allSongs[0]) {
-    res.status(200).json(allSongs);
+    if (is_favorite) {
+      if (is_favorite === "true") {
+        songsCopy = songsCopy.filter(({ is_favorite }) => is_favorite === true);
+      } else if (is_favorite === "false") {
+        songsCopy = songsCopy.filter(
+          ({ is_favorite }) => is_favorite === false
+        );
+      }
+    }
+    
+    res.status(200).json(songsCopy);
   } else {
     res.status(500).json({ error: "server error" });
   }
@@ -61,17 +60,6 @@ songs.get("/:id", async (req, res) => {
     res.status(404).json({ error: "not found" });
   }
 });
-
-// albums.get("/:albumName", async (req, res) => {
-//   const { albumName } = req.params;
-//   albumName.toLowerCase()
-// const album = await getAlbum(albumName);
-// if (album) {
-//   res.json(album);
-// } else {
-//   res.status(404).json({ error: "not found" });
-// }
-// });
 
 // CREATE
 songs.post("/", checkName, checkArtist, async (req, res) => {

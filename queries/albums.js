@@ -12,10 +12,6 @@ const getAllAlbums = async () => {
 // ONE Album
 const getAlbum = async (album_name) => {
   try {
-    //can also use:
-    //await db.one("SELECT * FROM albums WHERE id=$[id]", {
-    //   id: id,
-    // });
     const oneAlbum = await db.oneOrNone("SELECT * FROM albums WHERE LOWER(album_name)=LOWER($1)", album_name);
     return oneAlbum;
   } catch (error) {
@@ -25,11 +21,12 @@ const getAlbum = async (album_name) => {
 
 // CREATE 
 const createAlbum = async (album) => {
-  const { album_name, artist_name } = album;
+  const { album_name, artist_name, album_cover } = album;
+
   try {
     const newAlbum = await db.oneOrNone(
-      "INSERT INTO albums (album_name, artist_name) VALUES($1, $2) RETURNING *",
-      [album_name, artist_name]
+      "INSERT INTO albums (album_name, artist_name, album_cover) VALUES($1, $2, $3) RETURNING *",
+      [album_name, artist_name, album_cover]
     );
     return newAlbum;
   } catch (error) {
@@ -52,11 +49,11 @@ const deleteAlbum = async (id) => {
 
 //UPDATE
 const updateAlbum = async (id, album) => {
-  const { album_name, artist_name } = album;
+  const { album_name, artist_name, album_cover } = album;
   try {
     const updatedAlbum = await db.one(
-      "UPDATE albums SET album_name=$1, artist_name=$2 WHERE id=$3 RETURNING *",
-      [album_name, artist_name, id]
+      "UPDATE albums SET album_name=$1, artist_name=$2, album_cover=$3 WHERE id=$4 RETURNING *",
+      [album_name, artist_name, album_cover, id]
     );
     return updatedAlbum;
   } catch (error) {

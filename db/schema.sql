@@ -19,5 +19,6 @@ DROP TABLE IF EXISTS albums;
 CREATE TABLE albums (
     id SERIAL PRIMARY KEY, 
     album_name TEXT NOT NULL,
-    artist_name TEXT NOT NULL
+    artist_name TEXT NOT NULL,
+    album_cover TEXT
 );

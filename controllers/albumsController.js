@@ -35,6 +35,11 @@ albums.get("/:albumName", async (req, res) => {
 // CREATE
 albums.post("/", async (req, res) => {
   // console.log(req.body)
+
+  if (!req.body.album_cover) {
+    req.body.album_cover = "https://banner2.cleanpng.com/20190419/itt/kisspng-portable-network-graphics-computer-icons-clip-art-ocm-epk-one-church-5cba0363cac613.0848359515556944358306.jpg"
+  }
+
   try {
     const album = await createAlbum(req.body);
     res.json(album);
@@ -57,6 +62,9 @@ albums.delete("/:id", async (req, res) => {
 //UPDATE
 albums.put("/:id", async (req, res) => {
   const { id } = req.params;
+  if (!req.body.album_cover) {
+    req.body.album_cover = "https://banner2.cleanpng.com/20190419/itt/kisspng-portable-network-graphics-computer-icons-clip-art-ocm-epk-one-church-5cba0363cac613.0848359515556944358306.jpg"
+  }
   const updatedAlbum = await updateAlbum(id, req.body);
   res.status(200).json(updatedAlbum);
 });
