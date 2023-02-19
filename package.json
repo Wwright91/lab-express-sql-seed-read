@@ -1,0 +1,32 @@
+{
+  "name": "tuner-mono-repo",
+  "version": "1.0.0",
+  "description": "Starter code for student lab",
+  "main": "server.js",
+  "scripts": {
+    "db:init": "psql -U postgres -f db/schema.sql $DATABASE_URL",
+    "db:seed": "psql -U postgres -f db/seed.sql $DATABASE_URL",
+    "test": "jest --runInBand",
+    "start": "node server.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/joinpursuit/tuner-full-stack-app.git"
+  },
+  "author": "K. Rafalski",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/joinpursuit/tuner-full-stack-app/issues"
+  },
+  "homepage": "https://github.com/joinpursuit/tuner-full-stack-app#readme",
+  "dependencies": {
+    "cors": "^2.8.5",
+    "dotenv": "^16.0.3",
+    "express": "^4.18.2",
+    "jest": "^27.4.7",
+    "pg-promise": "^11.0.2",
+    "supertest": "^6.2.0"
+  },
+  "devDependencies": {},
+  "keywords": []
+}
